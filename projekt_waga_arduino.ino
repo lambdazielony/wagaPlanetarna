@@ -45,15 +45,18 @@ void setup() {
 }
 
 void loop() {
-  if(digitalRead(4) == 1)
-  { 
-    for(int i=0; i<LICZBADIOD; i++){
-    pixels.setPixelColor(i, 128, 128, 0);
-    }
+  if(digitalRead(4) == 1){ 
+    for(int i=0; i<LICZBADIOD; i++)
+      pixels.setPixelColor(i, 128, 128, 0);
     pixels.show();
     planetState = 1;
   }
-  else if(digitalRead(5) == 1) planetState = 2;
+  else if(digitalRead(5) == 1) { 
+    for(int i=0; i<LICZBADIOD; i++
+      pixels.setPixelColor(i, 128, 128, 0);
+    pixels.show();
+    planetState = 2;
+  }
   else if(digitalRead(6) == 1) planetState = 3;
   else if(digitalRead(7) == 1) planetState = 4;
   else if(digitalRead(8) == 1) planetState = 5;
@@ -62,14 +65,14 @@ void loop() {
   else if(digitalRead(11) == 1) planetState = 8;
   else if(digitalRead(12) == 1) planetState = 9;
   else if(digitalRead(13) == 1) planetState = 0;
-  
+
+
+  //jezeli waga bedzie rowna zero to ustaw satus planety na 100 (ekran powitalny)
   if (int(abs(scale.get_units())) == 0){ 
+    for(int i=0; i<240; i++)
+      pixels.setPixelColor(i, 128, 128, 128);
+    pixels.show(); 
     planetState = 100;
-     for(int i=0; i<240; i++){
-  pixels.setPixelColor(i, 128, 128, 128);
-  }
-  pixels.show();
-  
   }
 
   if(planetState == 1) Serial.print("1");
@@ -87,9 +90,11 @@ void loop() {
   Serial.print(" ");
   
   scale.set_scale(calibration_factor); //Adjust to this calibration factor
+  
   for(int i=0; i<3; i++){
     rejestr[i] = (int)abs(scale.get_units());
   }
+  
   for(int i=0; i<3; i++){
     srednia += rejestr[i];
   } 
