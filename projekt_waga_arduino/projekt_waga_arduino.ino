@@ -1,78 +1,63 @@
 #include <HX711.h>
 #include <Adafruit_NeoPixel.h>
+#include <SoftwareSerial.h>
  
-#define PIN A0
-#define LICZBADIOD 240
- 
+#define PIN 6
+#define LICZBADIOD 8
+
+#define DOUT  2
+#define CLK  3
+
+SoftwareSerial SerialtoNANO(A3, A2);
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(LICZBADIOD, PIN, NEO_GRB + NEO_KHZ800);
-
-#define DOUT  3
-#define CLK  2
-
-byte planetState = 100;
-
 HX711 scale(DOUT, CLK);
 
-float calibration_factor = 780;
-
+byte planetState = 100;
+float calibration_factor = -7050; //780
 int rejestr[3];
 int srednia = 0;
-
+char znak = '\n';
 
 void setup() {
   Serial.begin(9600);
-
-  pinMode(4, INPUT_PULLUP);
-  pinMode(5, INPUT_PULLUP);
-  pinMode(6, INPUT_PULLUP);
-  pinMode(7, INPUT_PULLUP);
-  pinMode(8, INPUT_PULLUP);
-  pinMode(9, INPUT_PULLUP);
-  pinMode(10, INPUT_PULLUP);
-  pinMode(11, INPUT_PULLUP);
-  pinMode(12, INPUT_PULLUP);
-  pinMode(13, INPUT_PULLUP);
+  SerialtoNANO.begin(4800);
   
   scale.set_scale();
   scale.tare(); //Reset the scale to 0
   long zero_factor = scale.read_average(); //Get a baseline reading
 
   pixels.begin(); // Inicjalizacja 
-  for(int i=0; i<LICZBADIOD; i++){
-  pixels.setPixelColor(i, 128, 128, 128);
-  }
+  for(int i=0; i<LICZBADIOD; i++)
+    pixels.setPixelColor(i, 128, 128, 128);
   pixels.show();
 }
 
 void loop() {
-  if(digitalRead(4) == 1){ 
-    for(int i=0; i<LICZBADIOD; i++)
-      pixels.setPixelColor(i, 128, 128, 0);
-    pixels.show();
-    planetState = 1;
-  }
-  else if(digitalRead(5) == 1) { 
-    for(int i=0; i<LICZBADIOD; i++
-      pixels.setPixelColor(i, 128, 128, 0);
-    pixels.show();
-    planetState = 2;
-  }
-  else if(digitalRead(6) == 1) planetState = 3;
-  else if(digitalRead(7) == 1) planetState = 4;
-  else if(digitalRead(8) == 1) planetState = 5;
-  else if(digitalRead(9) == 1) planetState = 6;
-  else if(digitalRead(10) == 1) planetState = 7;
-  else if(digitalRead(11) == 1) planetState = 8;
-  else if(digitalRead(12) == 1) planetState = 9;
-  else if(digitalRead(13) == 1) planetState = 0;
-
-
+ 
   //jezeli waga bedzie rowna zero to ustaw satus planety na 100 (ekran powitalny)
-  if (int(abs(scale.get_units())) == 0){ 
-    for(int i=0; i<240; i++)
+/*  if (int(abs(scale.get_units())) == 0){ 
+    for(int i=0; i<LICZBADIOD; i++)
       pixels.setPixelColor(i, 128, 128, 128);
     pixels.show(); 
     planetState = 100;
+    //SerialtoNANO.print("e");
+  }*/
+
+  if (SerialtoNANO.available()) {
+    znak = SerialtoNANO.read();
+    switch (znak) {
+      case '1': planetState = 1; break;
+      case '2': planetState = 2; break;
+      case '3': planetState = 3; break;
+      case '4': planetState = 4; break;
+      case '5': planetState = 5; break;
+      case '6': planetState = 6; break;
+      case '7': planetState = 7; break;
+      case '8': planetState = 8; break;
+      case '9': planetState = 9; break;
+      case '0': planetState = 0; break;
+      default: planetState = 100; break;
+    }
   }
 
   if(planetState == 1) Serial.print("1");
