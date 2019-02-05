@@ -13,8 +13,11 @@
 #define MOON 11
 #define SUN 12
 
+//porty obslugujace HX711
 #define DOUT A4
 #define CLK A5
+
+//porty obslugujace WS2812
 #define PIN 2
 #define LICZBADIOD 8 // 240
 
@@ -22,7 +25,7 @@ SoftwareSerial SerialtoLED(A2, A1); //komunikacja z ledami
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(LICZBADIOD, PIN, NEO_GRB + NEO_KHZ800);
 HX711 scale(DOUT, CLK);
 
-byte planetState = 100;
+byte planetState = 100; // stan poczatkowy prezentacji (układ sloneczny)
 float calibration_factor = -7050; //780
 int rejestr[3];
 int srednia = 0;
@@ -32,13 +35,8 @@ void setup() {
   Serial.begin(9600);
 
   scale.set_scale();
-  scale.tare(); //Reset the scale to 0
-  long zero_factor = scale.read_average(); //Get a baseline reading
-
-
-  for (int i = 0; i < LICZBADIOD; i++)
-    pixels.setPixelColor(i, 128, 128, 128);
-  pixels.show();
+  scale.tare(); 
+  long zero_factor = scale.read_average(); 
 
   pinMode(MERCURY, INPUT_PULLUP);
   pinMode(VENUS, INPUT_PULLUP);
@@ -50,9 +48,11 @@ void setup() {
   pinMode(NEPTUNE, INPUT_PULLUP);
   pinMode(MOON, INPUT_PULLUP);
   pinMode(SUN, INPUT_PULLUP);
-
+  
+  for (int i = 0; i < LICZBADIOD; i++)
+    pixels.setPixelColor(i, 128, 128, 128);
+  pixels.show();
   pixels.begin(); // Inicjalizacja
-
 }
 
 void loop() {
@@ -145,7 +145,8 @@ void loop() {
     for(int i=0; i<LICZBADIOD; i++)
       pixels.setPixelColor(i, 255, 192, 0);
     pixels.show();
-  } else if (planetState == 100){
+  } 
+  else if (planetState == 100){
     SerialtoLED.print("e");
     Serial.print("100");
     for(int i=0; i<LICZBADIOD; i++)
@@ -157,13 +158,17 @@ void loop() {
 
   scale.set_scale(calibration_factor); //Adjust to this calibration factor
 
+  //kopiowanie 4 kolejnych pomiaów do bufora
   for (int i = 0; i < 3; i++) 
       rejestr[i] = (int)abs(scale.get_units());
-  
+
+  //dodanie wszystkich pomiarów
   for (int i = 0; i < 3; i++) 
     srednia += rejestr[i];
-  
+
+  //obliczenie sredniej
   srednia /= 4;
+  
   Serial.print(srednia);
 
   Serial.print(",");

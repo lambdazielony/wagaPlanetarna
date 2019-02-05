@@ -1,5 +1,18 @@
 #include <SoftwareSerial.h>
 
+//definicja pinow odpowiedzialnych za diody pod przyciskami
+#define MERCURY 12
+#define VENUS 11
+#define EARTH 10
+#define MARS 9
+#define JUPITER 8
+#define SATURN 7
+#define URANUS 6
+#define NEPTUNE 5
+#define MOON 4
+#define SUN 3
+
+//komunikacja z glownym arduino
 SoftwareSerial SerialtoButtons(A3, A2);
 
 char znak = '\n';
@@ -7,16 +20,16 @@ byte planetState = 100;
 
 void setup() {
   SerialtoButtons.begin(4800);
-  pinMode(3, OUTPUT);
-  pinMode(4, OUTPUT);
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
-  pinMode(7, OUTPUT);
-  pinMode(8, OUTPUT);
-  pinMode(9, OUTPUT);
-  pinMode(10, OUTPUT);
-  pinMode(11, OUTPUT);
-  pinMode(12, OUTPUT);
+  pinMode(SUN, OUTPUT);
+  pinMode(MOON, OUTPUT);
+  pinMode(NEPTUNE, OUTPUT);
+  pinMode(URANUS, OUTPUT);
+  pinMode(SATURN, OUTPUT);
+  pinMode(JUPITER, OUTPUT);
+  pinMode(MARS, OUTPUT);
+  pinMode(EARTH, OUTPUT);
+  pinMode(VENUS, OUTPUT);
+  pinMode(MERCURY, OUTPUT);
 }
 
 void loop() {
@@ -37,38 +50,37 @@ void loop() {
     }
   }
 
-  if (planetState == 1) digitalWrite(12, HIGH);
-  else if (planetState == 2) digitalWrite(11, HIGH);
-  else if (planetState == 3) digitalWrite(10, HIGH);
-  else if (planetState == 4) digitalWrite(9, HIGH);
-  else if (planetState == 5) digitalWrite(8, HIGH);
-  else if (planetState == 6) digitalWrite(7, HIGH);
-  else if (planetState == 7) digitalWrite(6, HIGH);
-  else if (planetState == 8) digitalWrite(5, HIGH);
-  else if (planetState == 9) digitalWrite(4, HIGH);
-  else if (planetState == 10) digitalWrite(3, HIGH);
+  if (planetState == 1) digitalWrite(MERCURY, HIGH);
+  else if (planetState == 2) digitalWrite(VENUS, HIGH);
+  else if (planetState == 3) digitalWrite(EARTH, HIGH);
+  else if (planetState == 4) digitalWrite(MARS, HIGH);
+  else if (planetState == 5) digitalWrite(JUPITER, HIGH);
+  else if (planetState == 6) digitalWrite(SATURN, HIGH);
+  else if (planetState == 7) digitalWrite(URANUS, HIGH);
+  else if (planetState == 8) digitalWrite(NEPTUNE, HIGH);
+  else if (planetState == 9) digitalWrite(MOON, HIGH);
+  else if (planetState == 10) digitalWrite(SUN, HIGH);
   else if (planetState == 100) {   
-  digitalWrite(3, LOW);
-  digitalWrite(4, LOW);
-  digitalWrite(5, LOW);
-  digitalWrite(6, LOW);
-  digitalWrite(7, LOW);
-  digitalWrite(8, LOW);
-  digitalWrite(9, LOW);
-  digitalWrite(10, LOW);
-  digitalWrite(11, LOW);
-  digitalWrite(12, LOW);
+  digitalWrite(MERCURY, LOW);
+  digitalWrite(VENUS, LOW);
+  digitalWrite(EARTH, LOW);
+  digitalWrite(MARS, LOW);
+  digitalWrite(JUPITER, LOW);
+  digitalWrite(SATURN, LOW);
+  digitalWrite(URANUS, LOW);
+  digitalWrite(NEPTUNE, LOW);
+  digitalWrite(MOON, LOW);
+  digitalWrite(SUN, LOW);
   }
 
-  digitalWrite(3, LOW);
-  digitalWrite(4, LOW);
-  digitalWrite(5, LOW);
-  digitalWrite(6, LOW);
-  digitalWrite(7, LOW);
-  digitalWrite(8, LOW);
-  digitalWrite(9, LOW);
-  digitalWrite(10, LOW);
-  digitalWrite(11, LOW);
-  digitalWrite(12, LOW);
-
+  digitalWrite(MERCURY, LOW);
+  digitalWrite(VENUS, LOW);
+  digitalWrite(EARTH, LOW);
+  digitalWrite(MARS, LOW);
+  digitalWrite(JUPITER, LOW);
+  digitalWrite(SATURN, LOW);
+  digitalWrite(URANUS, LOW);
+  digitalWrite(NEPTUNE, LOW);
+  digitalWrite(MOON, LOW);
+  digitalWrite(SUN, LOW);
 }
