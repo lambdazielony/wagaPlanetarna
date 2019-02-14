@@ -3,17 +3,17 @@
 #include <SoftwareSerial.h>
  
 #define PIN 6
-#define LICZBADIOD 8
+#define LICZBADIOD 220
 
 #define DOUT  2
 #define CLK  3
 
-SoftwareSerial SerialtoNANO(A3, A2);
+SoftwareSerial SerialtoNANO(5, 4);
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(LICZBADIOD, PIN, NEO_GRB + NEO_KHZ800);
 HX711 scale(DOUT, CLK);
 
 byte planetState = 100;
-float calibration_factor = -7050; //780
+float calibration_factor = 780; //780
 int rejestr[3];
 int srednia = 0;
 char znak = '\n';
@@ -35,13 +35,13 @@ void setup() {
 void loop() {
  
   //jezeli waga bedzie rowna zero to ustaw satus planety na 100 (ekran powitalny)
-/*  if (int(abs(scale.get_units())) == 0){ 
+  if (int(abs(scale.get_units())) <= 0){ 
     for(int i=0; i<LICZBADIOD; i++)
       pixels.setPixelColor(i, 128, 128, 128);
     pixels.show(); 
     planetState = 100;
-    //SerialtoNANO.print("e");
-  }*/
+    SerialtoNANO.print("e");
+  }
 
   if (SerialtoNANO.available()) {
     znak = SerialtoNANO.read();
@@ -60,17 +60,73 @@ void loop() {
     }
   }
 
-  if(planetState == 1) Serial.print("1");
-  else if(planetState == 2) Serial.print("2");
-  else if(planetState == 3) Serial.print("3");
-  else if(planetState == 4) Serial.print("4");
-  else if(planetState == 5) Serial.print("5");
-  else if(planetState == 6) Serial.print("6");
-  else if(planetState == 7) Serial.print("7");
-  else if(planetState == 8) Serial.print("8");
-  else if(planetState == 9) Serial.print("9");
-  else if(planetState == 0) Serial.print("0");
-  else Serial.print("100");
+  if (planetState == 1) {
+    Serial.print("1"); //wysłanie informacji do komputera 
+    for(int i=0; i<LICZBADIOD; i++) //---------------\\
+      pixels.setPixelColor(i, 219, 206, 202);//------ustawienie koloru diod
+    pixels.show(); //--------------------------------//
+  }
+  else if (planetState == 2) {
+    Serial.print("2");
+    for(int i=0; i<LICZBADIOD; i++)
+      pixels.setPixelColor(i, 199, 60, 7);
+    pixels.show();
+  }
+  else if (planetState == 3) {
+    Serial.print("3");
+    for(int i=0; i<LICZBADIOD; i++)
+      pixels.setPixelColor(i, 11, 255, 30);
+    pixels.show();
+  }
+  else if (planetState == 4) {
+    Serial.print("4");
+    for(int i=0; i<LICZBADIOD; i++)
+      pixels.setPixelColor(i, 233, 107, 57);
+    pixels.show();
+  }
+  else if (planetState == 5) {
+    Serial.print("5");
+    for(int i=0; i<LICZBADIOD; i++)
+      pixels.setPixelColor(i, 157, 91, 3);
+    pixels.show();
+  }
+  else if (planetState == 6) {
+    Serial.print("6");
+    for(int i=0; i<LICZBADIOD; i++)
+      pixels.setPixelColor(i, 255, 229, 180);
+    pixels.show();
+  }
+  else if (planetState == 7) {
+    Serial.print("7");
+    for(int i=0; i<LICZBADIOD; i++)
+      pixels.setPixelColor(i, 0, 127, 255);
+    pixels.show();
+  }
+  else if (planetState == 8) {
+    Serial.print("8");
+    for(int i=0; i<LICZBADIOD; i++)
+      pixels.setPixelColor(i, 3, 0, 253);
+    pixels.show();
+  }
+  else if (planetState == 9) {
+    Serial.print("9");
+    for(int i=0; i<LICZBADIOD; i++)
+      pixels.setPixelColor(i, 219, 176, 239);
+    pixels.show();
+  }
+  else if (planetState == 0) {
+    Serial.print("0");
+    for(int i=0; i<LICZBADIOD; i++)
+      pixels.setPixelColor(i, 255, 192, 0);
+    pixels.show();
+  } 
+  else if (planetState == 100){
+    //SerialtoNANO.print("e");
+    Serial.print("100");
+    for(int i=0; i<LICZBADIOD; i++)
+      pixels.setPixelColor(i, 128, 128, 128);
+    pixels.show();
+  }
 
   Serial.print(" ");
   

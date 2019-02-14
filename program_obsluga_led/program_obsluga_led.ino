@@ -1,16 +1,16 @@
 #include <SoftwareSerial.h>
 
 //definicja pinow odpowiedzialnych za diody pod przyciskami
-#define MERCURY 12
-#define VENUS 11
-#define EARTH 10
-#define MARS 9
-#define JUPITER 8
-#define SATURN 7
-#define URANUS 6
-#define NEPTUNE 5
-#define MOON 4
-#define SUN 3
+#define MERCURY 3
+#define VENUS 4
+#define EARTH 5
+#define MARS 6
+#define JUPITER 7
+#define SATURN 8
+#define URANUS 9
+#define NEPTUNE 10
+#define MOON 11
+#define SUN 12
 
 //komunikacja z glownym arduino
 SoftwareSerial SerialtoButtons(A3, A2);
@@ -50,37 +50,136 @@ void loop() {
     }
   }
 
-  if (planetState == 1) digitalWrite(MERCURY, HIGH);
-  else if (planetState == 2) digitalWrite(VENUS, HIGH);
-  else if (planetState == 3) digitalWrite(EARTH, HIGH);
-  else if (planetState == 4) digitalWrite(MARS, HIGH);
-  else if (planetState == 5) digitalWrite(JUPITER, HIGH);
-  else if (planetState == 6) digitalWrite(SATURN, HIGH);
-  else if (planetState == 7) digitalWrite(URANUS, HIGH);
-  else if (planetState == 8) digitalWrite(NEPTUNE, HIGH);
-  else if (planetState == 9) digitalWrite(MOON, HIGH);
-  else if (planetState == 10) digitalWrite(SUN, HIGH);
-  else if (planetState == 100) {   
-  digitalWrite(MERCURY, LOW);
-  digitalWrite(VENUS, LOW);
-  digitalWrite(EARTH, LOW);
-  digitalWrite(MARS, LOW);
-  digitalWrite(JUPITER, LOW);
-  digitalWrite(SATURN, LOW);
-  digitalWrite(URANUS, LOW);
-  digitalWrite(NEPTUNE, LOW);
-  digitalWrite(MOON, LOW);
-  digitalWrite(SUN, LOW);
+  if (planetState == 1) {
+    digitalWrite(MERCURY, HIGH);
+    digitalWrite(VENUS, LOW);
+    digitalWrite(EARTH, LOW);
+    digitalWrite(MARS, LOW);
+    digitalWrite(JUPITER, LOW);
+    digitalWrite(SATURN, LOW);
+    digitalWrite(URANUS, LOW);
+    digitalWrite(NEPTUNE, LOW);
+    digitalWrite(MOON, LOW);
+    digitalWrite(SUN, LOW);
   }
-
-  digitalWrite(MERCURY, LOW);
-  digitalWrite(VENUS, LOW);
-  digitalWrite(EARTH, LOW);
-  digitalWrite(MARS, LOW);
-  digitalWrite(JUPITER, LOW);
-  digitalWrite(SATURN, LOW);
-  digitalWrite(URANUS, LOW);
-  digitalWrite(NEPTUNE, LOW);
-  digitalWrite(MOON, LOW);
-  digitalWrite(SUN, LOW);
+  else if (planetState == 2) {
+    digitalWrite(VENUS, HIGH);
+    digitalWrite(MERCURY, LOW);
+    digitalWrite(EARTH, LOW);
+    digitalWrite(MARS, LOW);
+    digitalWrite(JUPITER, LOW);
+    digitalWrite(SATURN, LOW);
+    digitalWrite(URANUS, LOW);
+    digitalWrite(NEPTUNE, LOW);
+    digitalWrite(MOON, LOW);
+    digitalWrite(SUN, LOW);
+  }
+  else if (planetState == 3) {
+    digitalWrite(EARTH, HIGH);
+    digitalWrite(MERCURY, LOW);
+    digitalWrite(VENUS, LOW);
+    digitalWrite(MARS, LOW);
+    digitalWrite(JUPITER, LOW);
+    digitalWrite(SATURN, LOW);
+    digitalWrite(URANUS, LOW);
+    digitalWrite(NEPTUNE, LOW);
+    digitalWrite(MOON, LOW);
+    digitalWrite(SUN, LOW);
+  }
+  else if (planetState == 4) {
+    digitalWrite(MARS, HIGH);
+    digitalWrite(MERCURY, LOW);
+    digitalWrite(VENUS, LOW);
+    digitalWrite(EARTH, LOW);
+    digitalWrite(JUPITER, LOW);
+    digitalWrite(SATURN, LOW);
+    digitalWrite(URANUS, LOW);
+    digitalWrite(NEPTUNE, LOW);
+    digitalWrite(MOON, LOW);
+    digitalWrite(SUN, LOW);
+  }
+  else if (planetState == 5) {
+    digitalWrite(JUPITER, HIGH);
+    digitalWrite(MERCURY, LOW);
+    digitalWrite(VENUS, LOW);
+    digitalWrite(EARTH, LOW);
+    digitalWrite(MARS, LOW);
+    digitalWrite(SATURN, LOW);
+    digitalWrite(URANUS, LOW);
+    digitalWrite(NEPTUNE, LOW);
+    digitalWrite(MOON, LOW);
+    digitalWrite(SUN, LOW);
+  }
+  else if (planetState == 6) {
+    digitalWrite(SATURN, HIGH);
+    digitalWrite(MERCURY, LOW);
+    digitalWrite(VENUS, LOW);
+    digitalWrite(EARTH, LOW);
+    digitalWrite(MARS, LOW);
+    digitalWrite(JUPITER, LOW);
+    digitalWrite(URANUS, LOW);
+    digitalWrite(NEPTUNE, LOW);
+    digitalWrite(MOON, LOW);
+    digitalWrite(SUN, LOW);
+  }
+  else if (planetState == 7) {
+    digitalWrite(URANUS, HIGH);
+    digitalWrite(MERCURY, LOW);
+    digitalWrite(VENUS, LOW);
+    digitalWrite(EARTH, LOW);
+    digitalWrite(MARS, LOW);
+    digitalWrite(JUPITER, LOW);
+    digitalWrite(SATURN, LOW);
+    digitalWrite(NEPTUNE, LOW);
+    digitalWrite(MOON, LOW);
+    digitalWrite(SUN, LOW);
+  }
+  else if (planetState == 8) {
+    digitalWrite(NEPTUNE, HIGH);
+    digitalWrite(MERCURY, LOW);
+    digitalWrite(VENUS, LOW);
+    digitalWrite(EARTH, LOW);
+    digitalWrite(MARS, LOW);
+    digitalWrite(JUPITER, LOW);
+    digitalWrite(SATURN, LOW);
+    digitalWrite(URANUS, LOW);
+    digitalWrite(MOON, LOW);
+    digitalWrite(SUN, LOW);
+  }
+  else if (planetState == 9) {
+    digitalWrite(MOON, HIGH);
+    digitalWrite(MERCURY, LOW);
+    digitalWrite(VENUS, LOW);
+    digitalWrite(EARTH, LOW);
+    digitalWrite(MARS, LOW);
+    digitalWrite(JUPITER, LOW);
+    digitalWrite(SATURN, LOW);
+    digitalWrite(URANUS, LOW);
+    digitalWrite(NEPTUNE, LOW);
+    digitalWrite(SUN, LOW);
+  }
+  else if (planetState == 10) {
+    digitalWrite(SUN, HIGH);
+    digitalWrite(MERCURY, LOW);
+    digitalWrite(VENUS, LOW);
+    digitalWrite(EARTH, LOW);
+    digitalWrite(MARS, LOW);
+    digitalWrite(JUPITER, LOW);
+    digitalWrite(SATURN, LOW);
+    digitalWrite(URANUS, LOW);
+    digitalWrite(NEPTUNE, LOW);
+    digitalWrite(MOON, LOW);
+  }
+  else if (planetState == 100) {
+    digitalWrite(MERCURY, LOW);
+    digitalWrite(VENUS, LOW);
+    digitalWrite(EARTH, LOW);
+    digitalWrite(MARS, LOW);
+    digitalWrite(JUPITER, LOW);
+    digitalWrite(SATURN, LOW);
+    digitalWrite(URANUS, LOW);
+    digitalWrite(NEPTUNE, LOW);
+    digitalWrite(MOON, LOW);
+    digitalWrite(SUN, LOW);
+  }
 }
